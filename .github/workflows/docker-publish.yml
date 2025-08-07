@@ -23,13 +23,19 @@ jobs:
         registry: ghcr.io
         username: ${{ secrets.GHCR_USERNAME }}
         password: ${{ secrets.GHCR_TOKEN }}
-
-    - name: Check nginx config syntax
+    
+    - name: Lint Nginx config syntax
       run: |
         docker run --rm -v $(pwd)/nginx.conf:/etc/nginx/nginx.conf nginx:stable-alpine nginx -t
+
+    - name: HTML Lint (basic)
+      run: |
+        sudo apt-get update && sudo apt-get install -y tidy
+        tidy -qe index.html
 
     - name: Build Docker image
       run: docker build -t ghcr.io/${{ github.repository }}:latest .
 
     - name: Push Docker image
       run: docker push ghcr.io/${{ github.repository }}:latest
+
