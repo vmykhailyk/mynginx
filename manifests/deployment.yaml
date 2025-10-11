@@ -19,3 +19,5 @@ spec:
           image: ghcr.io/vmykhailyk/mynginx/nginx-app:latest
           ports:
             - containerPort: 80
+      imagePullSecrets:
+        - name: ghcr-secret
