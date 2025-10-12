@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ site_title }}</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; margin-top: 5rem; }
+    h1 { color: #0078D7; }
+  </style>
+</head>
+<body>
+  <h1>{{ welcome_message }}</h1>
+  <p>Deployed at {{ ansible_date_time.iso8601 }}</p>
+</body>
+</html>

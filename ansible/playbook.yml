@@ -1,0 +1,6 @@
+---
+- name: Generate HTML for NGINX
+  hosts: local
+  connection: local
+  roles:
+    - nginx_html
