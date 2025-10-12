@@ -16,7 +16,16 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
+      
+    - name: Install Ansible
+      run: sudo apt-get update && sudo apt-get install -y ansible
 
+    - name: Generate HTML via Ansible
+      env:
+        GITHUB_RUN_NUMBER: ${{ github.run_number }}
+      run: ansible-playbook -i ansible/inventory.ini ansible/playbook.yml \
+            --extra-vars "github_run_number=${GITHUB_RUN_NUMBER}"
+            
     - name: Log in to GitHub Container Registry
       uses: docker/login-action@v3
       with:
