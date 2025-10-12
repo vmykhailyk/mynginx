@@ -54,6 +54,12 @@ jobs:
       - name: Push Docker image
         run: docker push ghcr.io/${{ github.repository }}:${{ github.run_number }}
 
+      - name: Update Deployment YAML with new image
+        run: |
+          sed -i "s|image: ghcr.io/.*/.*|image: ghcr.io/${GITHUB_REPOSITORY}:${GITHUB_RUN_NUMBER}|g" k8s/deployment.yaml
+          git add k8s/deployment.yaml
+          git commit -m "Update deployment image to $GITHUB_RUN_NUMBER" || echo "No changes"
+          git push
 
 
 
