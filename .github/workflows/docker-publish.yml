@@ -68,6 +68,7 @@ jobs:
           sed -i "s|image: ghcr.io/vmykhailyk/mynginx:.*|image: ghcr.io/vmykhailyk/mynginx:${GITHUB_RUN_NUMBER}|g" manifests/deployment.yaml
           git add manifests/deployment.yaml
           git commit -m "Update deployment image to $GITHUB_RUN_NUMBER" || echo "No changes"
+          git pull --rebase origin main
           git push
 
 
