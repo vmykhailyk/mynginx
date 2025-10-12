@@ -6,11 +6,11 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-push:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: write
+      contents: read
       packages: write
 
     steps:
@@ -27,25 +27,12 @@ jobs:
       - name: Generate HTML via Ansible
         run: ansible-playbook -i ansible/inventory.ini ansible/playbook.yml --extra-vars "github_run_number=${{ github.run_number }}"
 
-      - name: Commit generated index.html
-        run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-          git add index.html
-          git commit -m "Update index.html [skip ci]" || echo "No changes to commit"
-          git push
-
-      - name: Checkout updated repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: HTML Lint (basic)
+      - name: HTML Lint
         run: |
           sudo apt-get update && sudo apt-get install -y tidy
           tidy -qe index.html
 
-      - name: Lint Nginx config syntax
+      - name: Lint Nginx config
         run: |
           docker run --rm -v $(pwd)/nginx.conf:/etc/nginx/nginx.conf nginx:stable-alpine nginx -t
 
@@ -61,6 +48,11 @@ jobs:
 
       - name: Push Docker image
         run: docker push ghcr.io/${{ github.repository }}:${{ github.run_number }}
+
+      - name: Update Deployment with new image
+        run: |
+          kubectl set image deployment/nginx-app nginx=ghcr.io/${{ github.repository }}:${{ github.run_number }} --record
+
 
 
 
