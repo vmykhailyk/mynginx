@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: ghcr.io/vmykhailyk/mynginx:latest
+          image: ghcr.io/vmykhailyk/mynginx:${GITHUB_RUN_NUMBER}
           ports:
             - containerPort: 80
           imagePullPolicy: Always
