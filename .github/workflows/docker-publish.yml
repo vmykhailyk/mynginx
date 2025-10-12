@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: read
+      contents: write
       packages: write
 
     steps:
@@ -23,9 +23,15 @@ jobs:
           sudo apt-get install -y ansible
 
       - name: Generate HTML via Ansible
-        env:
-          GITHUB_RUN_NUMBER: ${{ github.run_number }}
-        run: ansible-playbook -i ansible/inventory.ini ansible/playbook.yml --extra-vars "github_run_number=${GITHUB_RUN_NUMBER}"
+        run: ansible-playbook -i ansible/inventory.ini ansible/playbook.yml --extra-vars "github_run_number=${{ github.run_number }}"
+
+      - name: Commit generated index.html
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add index.html
+          git commit -m "Update index.html [skip ci]" || echo "No changes to commit"
+          git push
 
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
@@ -48,4 +54,5 @@ jobs:
 
       - name: Push Docker image
         run: docker push ghcr.io/${{ github.repository }}:latest
+
 
