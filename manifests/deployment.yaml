@@ -17,8 +17,8 @@ spec:
       containers:
         - name: nginx
           image: ghcr.io/vmykhailyk/mynginx:latest
-          imagePullPolicy: Always
           ports:
             - containerPort: 80
+          imagePullPolicy: Always
       imagePullSecrets:
         - name: ghcr-secret
