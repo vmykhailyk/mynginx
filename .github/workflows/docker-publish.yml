@@ -33,6 +33,7 @@ jobs:
           git config user.email "github-actions@github.com"
           git add index.html
           git commit -m "Update index.html [skip ci]" || echo "No changes"
+          git pull --rebase origin main
           git push
     
       - name: Checkout code
