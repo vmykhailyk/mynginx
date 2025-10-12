@@ -2,5 +2,5 @@
 - name: Generate index.html from template
   ansible.builtin.template:
     src: index.html.j2
-    dest: "{{ playbook_dir }}/../index.html"
+    dest: "{{ lookup('env', 'GITHUB_WORKSPACE') }}/index.html"
     mode: '0644'
