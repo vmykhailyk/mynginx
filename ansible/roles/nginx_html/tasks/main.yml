@@ -4,3 +4,4 @@
     src: index.html.j2
     dest: "{{ lookup('env', 'GITHUB_WORKSPACE') }}/index.html"
     mode: '0644'
+    force: yes
