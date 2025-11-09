@@ -31,9 +31,10 @@ jobs:
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
+          git pull --rebase origin main
           git add index.html
-          git commit -m "Update index.html [skip ci]" || echo "No changes"
-          git push
+          git diff --cached --quiet || git commit -m "Update index.html [skip ci]"
+          git push origin main
     
       - name: Checkout code
         uses: actions/checkout@v4
@@ -64,11 +65,13 @@ jobs:
 
       - name: Update Deployment YAML with new image
         run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git pull --rebase origin main || echo "No changes to pull"
           sed -i "s|image: ghcr.io/vmykhailyk/mynginx:.*|image: ghcr.io/vmykhailyk/mynginx:${GITHUB_RUN_NUMBER}|g" manifests/deployment.yaml
           git add manifests/deployment.yaml
-          git commit -m "Update deployment image to $GITHUB_RUN_NUMBER" || echo "No changes"
-          git pull --rebase origin main
-          git push
+          git diff --cached --quiet || git commit -m "Update deployment image to $GITHUB_RUN_NUMBER"
+          git push origin main
 
 
 
