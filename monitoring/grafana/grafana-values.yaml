@@ -15,3 +15,8 @@ extraVolumeMounts:
     mountPath: /etc/ssl/certs/minikube-ca.crt
     subPath: ca.crt
     readOnly: true
+
+env:
+  - name: SSL_CERT_FILE
+    value: /etc/ssl/certs/minikube-ca.crt
+
