@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: ghcr.io/vmykhailyk/mynginx:67
+          image: ghcr.io/vmykhailyk/mynginx:68
           ports:
             - containerPort: 80
           imagePullPolicy: Always
