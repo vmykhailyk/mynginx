@@ -1,8 +1,32 @@
-grafana:
-  persistence:
-    enabled: true
-    existingClaim: grafana-pvc
-    accessModes:
-      - ReadWriteOnce
-    size: 10Gi
+persistence:
+  enabled: true
+  existingClaim: grafana-pvc
+  accessModes:
+    - ReadWriteOnce
+  size: 10Gi
+
+dashboards:
+  default:
+    alloy-exporter-dashboard:
+      json: |
+        {
+          "title": "Alloy Exporter Dashboard",
+          "panels": [
+            {
+              "type": "graph",
+              "title": "Alloy Metric Example",
+              "targets": [
+                {
+                  "expr": "alloy_metric_total",
+                  "interval": "",
+                  "legendFormat": "Alloy metric",
+                  "refId": "A"
+                }
+              ]
+            }
+          ],
+          "schemaVersion": 16,
+          "version": 1
+        }
+
 
