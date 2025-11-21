@@ -6,16 +6,8 @@ grafana:
       - ReadWriteOnce
     size: 10Gi
 
-  dashboardProviders:
-    dashboardproviders.yaml:
-      apiVersion: 1
-      providers:
-        - name: 'default'
-          orgId: 1
-          folder: ''
-          type: file
-          options:
-            path: /var/lib/grafana/dashboards
-
-  dashboardsConfigMap: false
+dashboards:
+  default:
+    alloy-exporter-dashboard:
+      file: dashboards/alloy-dashboard.json
 
