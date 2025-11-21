@@ -6,13 +6,13 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/<твій-репозиторій>.git'
+    repoURL: 'https://github.com/vmykhailyk/mynginx.git'
     targetRevision: main
     path: monitoring
     helm:
       valueFiles:
-        - prometheus/prometheus-values.yaml
-        - grafana/grafana-values.yaml
+        - monitoring/prometheus/prometheus-values.yaml
+        - monitoring/grafana/grafana-values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring
