@@ -5,6 +5,13 @@ persistence:
     - ReadWriteOnce
   size: 10Gi
 
-initChownData:
-  enabled: false
+extraVolumes:
+  - name: minikube-ca
+    configMap:
+      name: minikube-ca
 
+extraVolumeMounts:
+  - name: minikube-ca
+    mountPath: /etc/ssl/certs/minikube-ca.crt
+    subPath: ca.crt
+    readOnly: true
