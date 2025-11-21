@@ -6,8 +6,3 @@ grafana:
       - ReadWriteOnce
     size: 10Gi
 
-dashboards:
-  default:
-    alloy-exporter-dashboard:
-      file: dashboards/alloy-dashboard.json
-
