@@ -6,19 +6,10 @@ grafana:
       - ReadWriteOnce
     size: 10Gi
 
-  extraVolumes:
-    - name: minikube-ca
-      configMap:
-        name: minikube-ca
-
-  extraVolumeMounts:
-    - name: minikube-ca
-      mountPath: /etc/ssl/certs/minikube-ca.crt
-      subPath: ca.crt
-      readOnly: true
-
-  env:
-    - name: SSL_CERT_FILE
-      value: /etc/ssl/certs/minikube-ca.crt
+sidecar:
+  dashboards:
+    enabled: false
+  datasources:
+    enabled: false
 
 
